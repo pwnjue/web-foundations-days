@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>QuickNotes - Live Character Counter</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>QuickNotes</h1>
+      <p>Live Character Counter</p>
+    </header>
+
+    <main>
+      <section>
+        <h2>Write Your Note</h2>
+
+        <label for="note-text">Note</label>
+
+        <textarea
+          id="note-text"
+          rows="10"
+          placeholder="Write your note here..."
+        ></textarea>
+
+        <p id="char-count">0 / 200 characters</p>
+
+        <p id="word-count">0 words</p>
+
+        <button id="clear-btn" type="button">Clear</button>
+
+        <button id="theme-toggle" type="button">Dark mode</button>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 QuickNotes</p>
+    </footer>
+  </body>
+</html>

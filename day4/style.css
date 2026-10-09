@@ -1,0 +1,116 @@
+const titleInput = document.getElementById("title");
+const contentInput = document.getElementById("content");
+
+const titleCount = document.getElementById("titleCount");
+const contentCount = document.getElementById("contentCount");
+
+const clearBtn = document.getElementById("clearBtn");
+const themeBtn = document.getElementById("themeBtn");
+
+function updateCounts() {
+    const titleLength = titleInput.value.length;
+    const contentLength = contentInput.value.length;
+
+    titleCount.textContent = `${titleLength} / 50`;
+    contentCount.textContent = `${contentLength} / 500`;
+
+    titleCount.classList.toggle("warning", titleLength >= 40);
+    contentCount.classList.toggle("warning", contentLength >= 400);
+}
+
+function saveDraft() {
+    const draft = {
+        title: titleInput.value,
+        content: contentInput.value
+    };
+
+    localStorage.setItem("quickNotesDraft", JSON.stringify(draft));
+}
+
+function clearEverything() {
+    titleInput.value = "";
+    contentInput.value = "";
+
+    localStorage.removeItem("quickNotesDraft");
+
+    updateCounts();
+}
+
+function saveTheme() {
+    const isDark = document.body.classList.contains("dark");
+
+    localStorage.setItem("quickNotesTheme", isDark ? "dark" : "light");
+}
+
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+
+    const isDark = document.body.classList.contains("dark");
+
+    themeBtn.textContent = isDark ? "Light Mode" : "Dark Mode";
+
+    saveTheme();
+}
+
+titleInput.addEventListener("input", () => {
+    updateCounts();
+    saveDraft();
+});
+
+contentInput.addEventListener("input", () => {
+    updateCounts();
+    saveDraft();
+});
+
+clearBtn.addEventListener("click", clearEverything);
+
+themeBtn.addEventListener("click", toggleTheme);
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        clearEverything();
+    }
+});
+
+const savedDraft = localStorage.getItem("quickNotesDraft");
+
+if (savedDraft) {
+    const draft = JSON.parse(savedDraft);
+
+    titleInput.value = draft.title;
+    contentInput.value = draft.content;
+}
+
+const savedTheme = localStorage.getItem("quickNotesTheme");
+
+if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+    themeBtn.textContent = "Light Mode";
+}
+
+updateCounts();
+
+/* Dark mode */
+body.dark {
+    --bg-color: #222222;
+    --text-color: #ffffff;
+    --card-color: #333333;
+    --border-color: #555555;
+}
+
+/* Apply the theme colours */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+section {
+    background-color: var(--card-color);
+    border-color: var(--border-color);
+}
+
+textarea {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
